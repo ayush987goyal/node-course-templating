@@ -3,12 +3,13 @@ const mongodb = require('mongodb');
 const getDb = require('../util/database').getDb;
 
 class Product {
-  constructor(title, price, imageUrl, description, id) {
+  constructor(title, price, imageUrl, description, id, userId) {
     this.title = title;
     this.price = price;
     this.imageUrl = imageUrl;
     this.description = description;
     this._id = id ? mongodb.ObjectID(id) : null;
+    this.userId = userId;
   }
 
   save() {
@@ -30,10 +31,6 @@ class Product {
       .collection('products')
       .find()
       .toArray()
-      .then(result => {
-        console.log(result);
-        return result;
-      })
       .catch(err => console.log(err));
   }
 
