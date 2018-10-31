@@ -18,6 +18,8 @@
     <p>
       <%= product.description %>
     </p>
+    <% if (isAuthenticated) { %>
     <%- include('../includes/add-to-cart.ejs') %>
+    <% } %>
   </main>
   <%- include('../includes/end.ejs') %>
