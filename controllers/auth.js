@@ -54,7 +54,7 @@ exports.getSignup = (req, res, next) => {
   const message = req.flash('error');
   res.render('auth/signup', {
     path: '/signup',
-    pageTitle: 'signup',
+    pageTitle: 'Signup',
     errorMessage: message.length > 0 ? message[0] : null
   });
 };
@@ -94,5 +94,14 @@ exports.postSignup = (req, res, next) => {
 exports.postLogout = (req, res, next) => {
   req.session.destroy(err => {
     res.redirect('/login');
+  });
+};
+
+exports.getRest = (req, res, next) => {
+  const message = req.flash('error');
+  res.render('auth/reset', {
+    path: '/reset',
+    pageTitle: 'Reset Password',
+    errorMessage: message.length > 0 ? message[0] : null
   });
 };
