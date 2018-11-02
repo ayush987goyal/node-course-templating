@@ -20,21 +20,24 @@ exports.getLogin = (req, res, next) => {
   res.render('auth/login', {
     path: '/login',
     pageTitle: 'Login',
-    errorMessage: message.length > 0 ? message[0] : null
+    errorMessage: message.length > 0 ? message[0] : null,
+    oldInput: { email: '', password: '' }
   });
 };
 
 exports.postLogin = (req, res, next) => {
+  const { email, password } = req.body;
+
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.render('auth/login', {
+    return res.status(422).render('auth/login', {
       path: '/login',
       pageTitle: 'Login',
-      errorMessage: errors.array()[0].msg
+      errorMessage: errors.array()[0].msg,
+      oldInput: { email, password }
     });
   }
 
-  const { email, password } = req.body;
   User.findOne({ email: email })
     .then(user => {
       if (!user) {
@@ -67,21 +70,24 @@ exports.getSignup = (req, res, next) => {
   res.render('auth/signup', {
     path: '/signup',
     pageTitle: 'Signup',
-    errorMessage: message.length > 0 ? message[0] : null
+    errorMessage: message.length > 0 ? message[0] : null,
+    oldInput: { email: '', password: '', confirmPassword: '' }
   });
 };
 
 exports.postSignup = (req, res, next) => {
+  const { email, password, confirmPassword } = req.body;
+
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).render('auth/signup', {
       path: '/signup',
       pageTitle: 'Signup',
-      errorMessage: errors.array()[0].msg
+      errorMessage: errors.array()[0].msg,
+      oldInput: { email, password, confirmPassword }
     });
   }
 
-  const { email, password } = req.body;
   bcrypt
     .hash(password, 12)
     .then(hashedPassword => {
