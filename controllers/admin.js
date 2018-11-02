@@ -74,7 +74,7 @@ exports.postEditProduct = (req, res, next) => {
       path: '/admin/edit-product',
       editing: true,
       hasError: true,
-      product: { title, imageUrl, price, description },
+      product: { title, imageUrl, price, description, _id: productId },
       errorMessage: errors.array()[0].msg,
       validationErrors: errors.array()
     });
