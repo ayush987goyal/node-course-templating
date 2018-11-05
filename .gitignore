@@ -2,3 +2,6 @@ node_modules
 nodemon.json
 /images
 /data/invoices
+*.log
+server.cert
+server.key
